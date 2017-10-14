@@ -3,7 +3,7 @@
  */
 
 var http = require("http");
-var { JIRA } = require('./JIRA');
+var { JIRA } = require('./src/JIRA');
 
 
 //Create HTTP server and listen on port 8000 for requests
