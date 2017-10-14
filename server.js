@@ -3,6 +3,8 @@
  */
 
 var http = require("http");
+var { JIRA } = require('./JIRA');
+
 
 //Create HTTP server and listen on port 8000 for requests
 http.createServer(function (request, response) {
@@ -10,6 +12,10 @@ http.createServer(function (request, response) {
     // Set the response HTTP header with HTTP status and Content type
     response.writeHead(200, {'Content-Type': 'text/plain'});
 
+    var jiraSession = new JIRA();
+    response.write(jiraSession.queryAll());
+    response.write(jiraSession.setValue("123", "summary", "test"));
+    response.write(jiraSession.authenticate("", ""));
     // Send the response body "Hello World"
     response.end('Hello World\n');
 }).listen(8000);
