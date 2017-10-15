@@ -161,13 +161,13 @@ class JIRA {
             },
             data: {
                 "transition": {
-                    "id": columnId
+                    "id": "21"
                 },
             }
         };
 
         this.client.post(baseUrl + "api/2/issue/" + issueID +
-            "transitions?expand=transitions.fields",
+            "/transitions",
             postArgs, function(data, response) {
                 console.log('status code on transition:', response.statusCode);
                     if (!!callback) {

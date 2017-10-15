@@ -91,6 +91,7 @@ const initialHandlers = {
             }
         }
         this.response.speak(message).listen();
+        this.emit(":responseReady");
     },
     "AssignIssueIntent": function() {
         var jiraSession = new JIRA(jiraUsername, jiraPassword);
@@ -107,10 +108,11 @@ const initialHandlers = {
         });
     },
     "UpdateSummaryIntent": function() {
+        var filledSlots = delegateSlotCollection.call(this);
         var jiraSession = new JIRA(jiraUsername, jiraPassword);
         var output = this;
-        var issue = this.event.request.intent.slots.issue.value;
-        var summary = this.event.request.intent.slots.summary.value;
+        var issue = isSlotValid(this.event.request, "issue");
+        var summary = isSlotValid(this.event.request, "summary");
         if (!issue || !summary) {
             this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
             this.emit(":responseReady");
@@ -121,10 +123,11 @@ const initialHandlers = {
         });
     },
     "UpdateDescriptionIntent": function() {
+        var filledSlots = delegateSlotCollection.call(this);
         var jiraSession = new JIRA(jiraUsername, jiraPassword);
         var output = this;
-        var issue = this.event.request.intent.slots.issue.value;
-        var description = this.event.request.intent.slots.description.value;
+        var issue = isSlotValid(this.event.request, "issue");
+        var description = isSlotValid(this.event.request, "description");
         if (!issue || !description) {
             this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
             this.emit(":responseReady");
@@ -135,10 +138,11 @@ const initialHandlers = {
         });
     },
     "AddCommentIntent": function() {
+        var filledSlots = delegateSlotCollection.call(this);
         var jiraSession = new JIRA(jiraUsername, jiraPassword);
         var output = this;
-        var issue = this.event.request.intent.slots.issue.value;
-        var body = this.event.request.intent.slots.comment.value;
+        var issue = isSlotValid(this.event.request, "issue");
+        var body = isSlotValid(this.event.request, "comment");
         if (!issue || !body) {
             this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
             this.emit(":responseReady");
@@ -147,136 +151,66 @@ const initialHandlers = {
             output.response.speak("Added your comment " + body + " to issue " + issue);
             output.emit(":responseReady");
         });
+    },
+    "MoveIssueIntent": function() {
+        var jiraSession = new JIRA(jiraUsername, jiraPassword);
+        var output = this;
+        var issue = this.event.request.intent.slots.issue.value;
+        var column = this.event.request.intent.slots.column.value;
+        if (!issue || !column) {
+            this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
+            this.emit(":responseReady");
+        }
+        column = column.toLowerCase();
+        var columns = {
+            "to do" : "11",
+            "in progress" : "21",
+            "done": "31"
+        }
+        var selectedTransition = columns[column];
+        jiraSession.transition(issue, selectedTransition, function(result){
+            output.response.speak("Moved issue to " + column);
+            output.emit(":responseReady");
+        })
     }
 
 };
 
-
-/*
-
-
- if(Object.keys(this.attributes).length === 0) {
- this.attributes['endedSessionCount'] = 0;
- this.attributes['gamesPlayed'] = 0;
- }
-var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
-    'NewSession': function () {
-        this.emit('NewSession'); // Uses the handler in newSessionHandlers
-    },
-    'AMAZON.HelpIntent': function() {
-        var message = 'I will think of a number between zero and one hundred, try to guess and I will tell you if it' +
-            ' is higher or lower. Do you want to start the game?';
-        this.response.speak(message).listen(message);
-        this.emit(':responseReady');        
-    },
-    'AMAZON.YesIntent': function() {
-        this.attributes["guessNumber"] = Math.floor(Math.random() * 100);
-        this.handler.state = states.GUESSMODE;
-        this.response.speak('Great! ' + 'Try saying a number to start the game.').listen('Try saying a number.');
-        this.emit(':responseReady');        
-    },
-    'AMAZON.NoIntent': function() {
-        console.log("NOINTENT");
-        this.response.speak('Ok, see you next time!');
-        this.emit(':responseReady');        
-    },
-    "AMAZON.StopIntent": function() {
-      console.log("STOPINTENT");
-      this.response.speak("Goodbye!");  
-      this.emit(':responseReady');  
-    },
-    "AMAZON.CancelIntent": function() {
-      console.log("CANCELINTENT");
-      this.response.speak("Goodbye!");  
-      this.emit(':responseReady');  
-    },
-    'SessionEndedRequest': function () {
-        console.log("SESSIONENDEDREQUEST");
-        //this.attributes['endedSessionCount'] += 1;
-        this.response.speak("Goodbye!");  
-        this.emit(':responseReady');
-    },
-    'Unhandled': function() {
-        console.log("UNHANDLED");
-        var message = 'Say yes to continue, or no to end the game.';
-        this.response.speak(message).listen(message);
-        this.emit(':responseReady');        
+function delegateSlotCollection(){
+    console.log("in delegateSlotCollection");
+    console.log("current dialogState: "+this.event.request.dialogState);
+    if (this.event.request.dialogState === "STARTED") {
+        console.log("in Beginning");
+        var updatedIntent=this.event.request.intent;
+        //optionally pre-fill slots: update the intent object with slot values for which
+        //you have defaults, then return Dialog.Delegate with this updated intent
+        // in the updatedIntent property
+        this.emit(":delegate", updatedIntent);
+    } else if (this.event.request.dialogState !== "COMPLETED") {
+        console.log("in not completed");
+        // return a Dialog.Delegate directive with no updatedIntent property.
+        this.emit(":delegate");
+    } else {
+        console.log("in completed");
+        console.log("returning: "+ JSON.stringify(this.event.request.intent));
+        // Dialog is now complete and all required slots should be filled,
+        // so call your normal intent handler.
+        return this.event.request.intent;
     }
-});
+}
 
-var guessModeHandlers = Alexa.CreateStateHandler(states.GUESSMODE, {
-    'NewSession': function () {
-        this.handler.state = '';
-        this.emitWithState('NewSession'); // Equivalent to the Start Mode NewSession handler
-    },
-    'NumberGuessIntent': function() {
-        var guessNum = parseInt(this.event.request.intent.slots.number.value);
-        var targetNum = this.attributes["guessNumber"];
-        console.log('user guessed: ' + guessNum);
+function isSlotValid(request, slotName){
+    var slot = request.intent.slots[slotName];
+    //console.log("request = "+JSON.stringify(request)); //uncomment if you want to see the request
+    var slotValue;
 
-        if(guessNum > targetNum){
-            this.emit('TooHigh', guessNum);
-        } else if( guessNum < targetNum){
-            this.emit('TooLow', guessNum);
-        } else if (guessNum === targetNum){
-            // With a callback, use the arrow function to preserve the correct 'this' context
-            this.emit('JustRight', () => {
-                this.response.speak(guessNum.toString() + 'is correct! Would you like to play a new game?')
-                .listen('Say yes to start a new game, or no to end the game.');
-                this.emit(':responseReady');                
-        })
-        } else {
-            this.emit('NotANum');
-        }
-    },
-    'AMAZON.HelpIntent': function() {
-        this.response.speak('I am thinking of a number between zero and one hundred, try to guess and I will tell you' +
-            ' if it is higher or lower.')
-            .listen('Try saying a number.');
-        this.emit(':responseReady');            
-    },
-    "AMAZON.StopIntent": function() {
-        console.log("STOPINTENT");
-      this.response.speak("Goodbye!"); 
-      this.emit(':responseReady');      
-    },
-    "AMAZON.CancelIntent": function() {
-        console.log("CANCELINTENT");
-    },
-    'SessionEndedRequest': function () {
-        console.log("SESSIONENDEDREQUEST");
-        this.attributes['endedSessionCount'] += 1;
-        this.response.speak("Goodbye!");
-        this.emit(':responseReady');        
-    },
-    'Unhandled': function() {
-        console.log("UNHANDLED");
-        this.response.speak('Sorry, I didn\'t get that. Try saying a number.')
-        .listen('Try saying a number.');
-        this.emit(':responseReady');        
+    //if we have a slot, get the text and store it into speechOutput
+    if (slot && slot.value) {
+        //we have a value in the slot
+        slotValue = slot.value.toLowerCase();
+        return slotValue;
+    } else {
+        //we didn't get a value in the slot.
+        return false;
     }
-});
-
-// These handlers are not bound to a state
-var guessAttemptHandlers = {
-    'TooHigh': function(val) {
-        this.response.speak(val.toString() + ' is too high.')
-        .listen('Try saying a smaller number.');
-        this.emit(':responseReady');
-    },
-    'TooLow': function(val) {
-        this.response.speak(val.toString() + ' is too low.')
-        .listen('Try saying a larger number.');
-        this.emit(':responseReady');        
-    },
-    'JustRight': function(callback) {
-        this.handler.state = states.STARTMODE;
-        this.attributes['gamesPlayed']++;
-        callback();
-    },
-    'NotANum': function() {
-        this.response.speak('Sorry, I didn\'t get that. Try saying a number.')
-        .listen('Try saying a number.');
-        this.emit(':responseReady');        
-    }
-};*/
+}
