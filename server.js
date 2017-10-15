@@ -21,7 +21,7 @@ http.createServer(function (request, response) {
     response.write(jiraSession.transition("10005", "4"));
     response.write(jiraSession.getTransitions("10005"));
     response.write(jiraSession.notifyOnIssue("10005", "Testing",
-        "Damn, Daniel! It Works!", ["Anthony", "Will"]));
+        "Damn, Daniel! It Works!", ["Daniel", "Will"]));
     // Send the response body "Hello World"
     response.end('Hello World\n');
 }).listen(8000);

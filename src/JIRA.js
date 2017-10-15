@@ -89,11 +89,12 @@ class JIRA {
             for(var i = 0; i < teamMembers.length;i++) {
                 console.log("Sending message to " + teamMembers[i]);
                 postArgs.data.users.push({
-                    "name": userMapping[i],
+                    "name": userMapping[teamMembers[i]],
                     "active": true
                 });
             }
         }
+        console.log(postArgs.data.users);
 
 
         this.client.post(baseUrl + "api/2/issue/" + issueId + "/notify",
