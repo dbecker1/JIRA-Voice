@@ -1,35 +1,84 @@
 'use strict';
 var Alexa = require("alexa-sdk");
-var appId = 'amzn1.ask.skill.4f05a321-de24-4a56-a7b4-9e83eb9e5a54';
+var aws = require("aws-sdk");
+var { JIRA } = require('./JIRA');
+
+var APP_ID = 'amzn1.ask.skill.4f05a321-de24-4a56-a7b4-9e83eb9e5a54';
+const jiraUsername = "admin";
+const jiraPassword = "hackgt2017";
 
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
-    alexa.appId = appId;
-    alexa.dynamoDBTableName = 'highLowGuessUsers';
-    alexa.registerHandlers(newSessionHandlers, guessModeHandlers, startGameHandlers, guessAttemptHandlers);
+    alexa.APP_ID = APP_ID;
+    //alexa.dynamoDBTableName = "JiraVoiceAttributes";
+    alexa.registerHandlers(initialHandlers);
     alexa.execute();
 };
 
 var states = {
-    GUESSMODE: '_GUESSMODE', // User is trying to guess the number.
-    STARTMODE: '_STARTMODE'  // Prompt the user to start or restart the game.
+    START: '_START',  // Initial start up, prompt user for what they want to do.
+    LIST: '_LIST' // Currently in progress of listing issues to user
 };
 
-var newSessionHandlers = {
-    'NewSession': function() {
-        if(Object.keys(this.attributes).length === 0) {
-            this.attributes['endedSessionCount'] = 0;
-            this.attributes['gamesPlayed'] = 0;
+const initialHandlers = {
+    "LaunchRequest": function() {
+        this.emit("InitialIntent");
+    },
+    "InitialIntent": function() {
+        var jiraSession = new JIRA(jiraUsername, jiraPassword);
+        var output = this;
+        jiraSession.queryAll(function(results){
+            console.log(results);
+            output.attributes["issues"] = JSON.stringify(results.issues)
+            var issueTypes = {
+                toDo: 0,
+                inProgress: 0,
+                done: 0,
+            }
+            for (var i = 0; i < results.issues.length; i++) {
+                var issue = results.issues[i];
+                console.log(issue);
+                switch (issue.fields.status.name) {
+                    case "To Do":
+                        issueTypes.toDo++;
+                        break;
+                    case "In Progress":
+                        issueTypes.inProgress++;
+                        break;
+                    case "Done":
+                        issueTypes.done++;
+                        break;
+                }
+            }
+            var text = "Welcome to JIRA Voice. Here is an overview of your issues. ";
+            text += "You currently have " + issueTypes.toDo + " issues in To Do, ";
+            text += issueTypes.inProgress + " issues In Progress, and ";
+            text += issueTypes.done + " in Done. ";
+            output.response.speak(text).listen("What would you like to do?");
+            output.emit(':responseReady');
+        });
+    },
+    "ListIssuesIntent": function() {
+        var issues = JSON.parse(this.attributes["issues"]);
+        var column = this.event.request.intent.slots.column.value.toLowerCase();
+        var message = "";
+        for (var i = 0; i < issues.length; i++) {
+            var issue = issues[i];
+            if (issue.fields.status.name.toLowerCase() == column) {
+                message += "Issue " + issue.id + ". " + issue.fields.summary + ".";
+            }
         }
-        this.handler.state = states.STARTMODE;
-        this.response.speak('Welcome to High Low guessing game. You have played '
-            + this.attributes['gamesPlayed'].toString() + ' times. would you like to play?')
-            .listen('Say yes to start the game or no to quit.');
-        this.emit(':responseReady');  
+        this.response.speak(message);
+        this.emit(':responseReady');
+    },
+    "AMAZON.HelpIntent": function() {
+        this.response.speak("You can ask to perform multiple different actions regarding your Jira issues. You can ask for descriptions" +
+            "of them, edit fields on then, or even resolve them and assign them to other users.");
+        this.emit(":responseReady");
     },
     "AMAZON.StopIntent": function() {
-      this.response.speak("Goodbye!");  
-      this.emit(':responseReady');
+        this.response.speak("Goodbye!");
+        this.emit(':responseReady');
     },
     "AMAZON.CancelIntent": function() {
         this.response.speak("Goodbye!");  
@@ -37,12 +86,19 @@ var newSessionHandlers = {
     },
     'SessionEndedRequest': function () {
         console.log('session ended!');
-        //this.attributes['endedSessionCount'] += 1;
-        this.response.speak("Goodbye!");  
+        this.response.speak("Goodbye!");
         this.emit(':responseReady');
     }
 };
 
+
+/*
+
+
+ if(Object.keys(this.attributes).length === 0) {
+ this.attributes['endedSessionCount'] = 0;
+ this.attributes['gamesPlayed'] = 0;
+ }
 var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
     'NewSession': function () {
         this.emit('NewSession'); // Uses the handler in newSessionHandlers
@@ -163,4 +219,4 @@ var guessAttemptHandlers = {
         .listen('Try saying a number.');
         this.emit(':responseReady');        
     }
-};
+};*/

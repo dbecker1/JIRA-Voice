@@ -18,8 +18,6 @@
 // the role must have a trusted policy with
 // "lambda.amazonaws.com" and "arn:aws:iam::<YOUR ACCOUNT ID>:user/<YOUR USER>"
 
-    // access key AKIAIZS64252ZDXVZL2Q
-    // secret key r1t5iX8d+uhy5aoI/zYWja2OP50uCaFxck7db95k
     // user arn arn:aws:iam::992977000246:user/debugUser
     // role arn arn:aws:iam::992977000246:role/lambda_basic_execution
 
