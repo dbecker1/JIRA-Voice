@@ -88,6 +88,34 @@ const initialHandlers = {
             output.emit(":responseReady");
         });
     },
+    "UpdateSummaryIntent": function() {
+        var jiraSession = new JIRA(jiraUsername, jiraPassword);
+        var output = this;
+        var issue = this.event.request.intent.slots.issue.value;
+        var summary = this.event.request.intent.slots.summary.value;
+        if (!issue || !summary) {
+            this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
+            this.emit(":responseReady");
+        }
+        jiraSession.updateSummary(issue, summary, function(result){
+            output.response.speak("The summary for " + issue + " has been updated");
+            output.emit(":responseReady");
+        });
+    },
+    "UpdateDescriptionIntent": function() {
+        var jiraSession = new JIRA(jiraUsername, jiraPassword);
+        var output = this;
+        var issue = this.event.request.intent.slots.issue.value;
+        var description = this.event.request.intent.slots.description.value;
+        if (!issue || !description) {
+            this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
+            this.emit(":responseReady");
+        }
+        jiraSession.updateDescription(issue, summary, function(result){
+            output.response.speak("The description for " + issue + " has been updated");
+            output.emit(":responseReady");
+        });
+    },
     "AMAZON.HelpIntent": function() {
         this.response.speak("You can ask to perform multiple different actions regarding your Jira issues. You can ask for descriptions" +
             "of them, edit fields on then, or even resolve them and assign them to other users.");
