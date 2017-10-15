@@ -37,7 +37,7 @@ class JIRA {
             putArgs, function(data, response) {
                 console.log('status code of assign:', response.statusCode);
                 if (!!callback) {
-                    callback(searchResult);
+                    callback(data);
                 };
         });
         return "Assigning issue: " + issueID + " to " + userMapping[assignee];
@@ -59,7 +59,7 @@ class JIRA {
                 //console.log(data.transitions[3]);
                 //console.log(data.transitions);
                 if (!!callback) {
-                        callback(searchResult);
+                        callback(data);
                     };
                 });
         return "Got transitions";
@@ -101,7 +101,7 @@ class JIRA {
             postArgs, function(data, response) {
                 console.log('status code of notifyOnIssue:', response.statusCode);
                 if (!!callback) {
-                    callback(searchResult);
+                    callback(data);
                 };
         });
 
@@ -123,7 +123,7 @@ class JIRA {
         this.client.post(baseUrl + "api/2/search", searchArgs, function(searchResult, response) {
                 console.log('status code on queryAll:', response.statusCode);
                 if (!!callback) {
-                    callback(searchResult);
+                    callback(data);
                 };
         });
 
@@ -149,7 +149,7 @@ class JIRA {
             postArgs, function(data, response) {
                 console.log('status code on transition:', response.statusCode);
                     if (!!callback) {
-                        callback(searchResult);
+                        callback(data);
                     };
         });
         return "Issue " + issueID + " has been moved to column " + columnId;
@@ -177,7 +177,7 @@ class JIRA {
             putArgs, function(data, response) {
                 console.log('status code on updateDescription:', response.statusCode);
                 if (!!callback) {
-                    callback(searchResult);
+                    callback(data);
                 };
         });
         return "In issue " + issueID + ", set description to " + description;
@@ -229,7 +229,7 @@ class JIRA {
             putArgs, function(data, response) {
                 console.log('status code on updateSummary:', response.statusCode);
                 if (!!callback) {
-                    callback(searchResult);
+                    callback(data);
                 };
         });
         return "In issue " + issueID + ", set summary to " + summary;
