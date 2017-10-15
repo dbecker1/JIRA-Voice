@@ -1,7 +1,7 @@
 {
   "session": {
     "new": true,
-    "sessionId": "SessionId.30d2ad55-10f2-4c84-82d4-098a3b53d482",
+    "sessionId": "SessionId.0037183c-ce1e-455b-aab4-38a2ee1b91d3",
     "application": {
       "applicationId": "amzn1.ask.skill.4f05a321-de24-4a56-a7b4-9e83eb9e5a54"
     },
@@ -11,10 +11,23 @@
     }
   },
   "request": {
-    "type": "LaunchRequest",
-    "requestId": "EdwRequestId.72d1ad31-14cb-47f5-a0d4-9f83ba257cbf",
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.50ad1339-08fb-42da-8846-032c8ea12360",
+    "intent": {
+      "name": "UpdateSummaryIntent",
+      "slots": {
+        "summary": {
+          "name": "summary",
+          "value": "as a user I want to log in so that I can see stuff"
+        },
+        "issue": {
+          "name": "issue",
+          "value": "10001"
+        }
+      }
+    },
     "locale": "en-US",
-    "timestamp": "2017-10-15T02:31:11Z"
+    "timestamp": "2017-10-15T03:37:35Z"
   },
   "context": {
     "AudioPlayer": {
