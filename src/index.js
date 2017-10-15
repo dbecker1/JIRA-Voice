@@ -27,9 +27,10 @@ const initialHandlers = {
     "InitialIntent": function() {
         var jiraSession = new JIRA(jiraUsername, jiraPassword);
         var output = this;
-        jiraSession.queryAll(function(results){
+        jiraSession.queryAll(jiraUsername, function(results){
             console.log(results);
-            output.attributes["issues"] = JSON.stringify(results.issues)
+
+            var attributeObject = [];
             var issueTypes = {
                 toDo: 0,
                 inProgress: 0,
@@ -37,6 +38,8 @@ const initialHandlers = {
             }
             for (var i = 0; i < results.issues.length; i++) {
                 var issue = results.issues[i];
+                var attribute = { id: issue.id, summary : issue.fields.summary, column : issue.fields.status.name};
+                attributeObject.push(attribute);
                 console.log(issue);
                 switch (issue.fields.status.name) {
                     case "To Do":
@@ -50,6 +53,7 @@ const initialHandlers = {
                         break;
                 }
             }
+            output.attributes["issues"] = JSON.stringify(attributeObject)
             var text = "Welcome to JIRA Voice. Here is an overview of your issues. ";
             text += "You currently have " + issueTypes.toDo + " issues in To Do, ";
             text += issueTypes.inProgress + " issues In Progress, and ";
@@ -64,12 +68,25 @@ const initialHandlers = {
         var message = "";
         for (var i = 0; i < issues.length; i++) {
             var issue = issues[i];
-            if (issue.fields.status.name.toLowerCase() == column) {
-                message += "Issue " + issue.id + ". " + issue.fields.summary + ".";
+            if (issue.column.toLowerCase() == column) {
+                message += "Issue " + issue.id + ". " + issue.summary + " ";
             }
         }
-        this.response.speak(message);
-        this.emit(':responseReady');
+        this.response.speak(message).listen();
+    },
+    "AssignIssueIntent": function() {
+        var jiraSession = new JIRA(jiraUsername, jiraPassword);
+        var output = this;
+        var issue = this.event.request.intent.slots.issue.value;
+        var assignee = this.event.request.intent.slots.assignee.value;
+        if (!issue || !assignee) {
+            this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
+            this.emit(":responseReady");
+        }
+        jiraSession.assign(issue, assignee, function(result){
+            output.response.speak("Issue " + issue + " has been assigned to " + assignee);
+            output.emit(":responseReady");
+        });
     },
     "AMAZON.HelpIntent": function() {
         this.response.speak("You can ask to perform multiple different actions regarding your Jira issues. You can ask for descriptions" +

@@ -123,7 +123,7 @@ class JIRA {
         this.client.post(baseUrl + "api/2/search", searchArgs, function(searchResult, response) {
                 console.log('status code on queryAll:', response.statusCode);
                 if (!!callback) {
-                    callback(data);
+                    callback(searchResult);
                 };
         });
 

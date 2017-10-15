@@ -1,33 +1,20 @@
-
-
 {
   "session": {
     "new": true,
-    "sessionId": "SessionId.a43c1794-770f-4274-9f5a-2d8456522650",
+    "sessionId": "SessionId.30d2ad55-10f2-4c84-82d4-098a3b53d482",
     "application": {
       "applicationId": "amzn1.ask.skill.4f05a321-de24-4a56-a7b4-9e83eb9e5a54"
     },
-    "attributes": {
-      "issues": "[{\"expand\":\"operations,versionedRepresentations,editmeta,changelog,renderedFields\",\"id\":\"10007\",\"self\":\"https://jira-voice.atlassian.net/rest/api/2/issue/10007\",\"key\":\"JV-8\",\"fields\":{\"issuetype\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/issuetype/10001\",\"id\":\"10001\",\"description\":\"A user story. Created by Jira Software - do not edit or delete.\",\"iconUrl\":\"https://jira-voice.atlassian.net/secure/viewavatar?size=xsmall&avatarId=10315&avatarType=issuetype\",\"name\":\"Story\",\"subtask\":false,\"avatarId\":10315},\"timespent\":null,\"project\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/project/10000\",\"id\":\"10000\",\"key\":\"JV\",\"name\":\"JIRA Voice\",\"avatarUrls\":{\"48x48\":\"https://jira-voice.atlassian.net/secure/projectavatar?avatarId=10324\",\"24x24\":\"https://jira-voice.atlassian.net/secure/projectavatar?size=small&avatarId=10324\",\"16x16\":\"https://jira-voice.atlassian.net/secure/projectavatar?size=xsmall&avatarId=10324\",\"32x32\":\"https://jira-voice.atlassian.net/secure/projectavatar?size=medium&avatarId=10324\"}},\"fixVersions\":[],\"aggregatetimespent\":null,\"resolution\":null,\"resolutiondate\":null,\"workratio\":-1,\"watches\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/issue/JV-8/watchers\",\"watchCount\":1,\"isWatching\":true},\"lastViewed\":\"2017-10-14T09:32:43.415-0400\",\"created\":\"2017-10-14T09:24:57.996-0400\",\"priority\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/priority/3\",\"iconUrl\":\"https://jira-voice.atlassian.net/images/icons/priorities/medium.svg\",\"name\":\"Medium\",\"id\":\"3\"},\"labels\":[],\"aggregatetimeoriginalestimate\":null,\"timeestimate\":null,\"versions\":[],\"issuelinks\":[],\"assignee\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/user?username=admin\",\"name\":\"admin\",\"key\":\"admin\",\"accountId\":\"557058:1a8344f7-d59d-4457-823d-ef1e6ac1e4fc\",\"emailAddress\":\"adachille15@gmail.com\",\"avatarUrls\":{\"48x48\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue\",\"24x24\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue\",\"16x16\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue\",\"32x32\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue\"},\"displayName\":\"Anthony D'Achille\",\"active\":true,\"timeZone\":\"America/New_York\"},\"updated\":\"2017-10-14T13:34:23.374-0400\",\"status\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/status/10000\",\"description\":\"\",\"iconUrl\":\"https://jira-voice.atlassian.net/\",\"name\":\"To Do\",\"id\":\"10000\",\"statusCategory\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"To Do\"}},\"components\":[],\"customfield_10051\":null,\"timeoriginalestimate\":null,\"customfield_10052\":null,\"customfield_10053\":null,\"description\":null,\"customfield_10054\":null,\"customfield_10010\":[\"com.atlassian.greenhopper.service.sprint.Sprint@5cc9a2f4[id=1,rapidViewId=1,state=ACTIVE,name=Sprint 1,goal=,startDate=2017-10-14T13:16:30.171Z,endDate=2017-10-28T13:16:00.000Z,completeDate=<null>,sequence=1]\"],\"customfield_10055\":null,\"customfield_10011\":\"0|i00006:s\",\"customfield_10056\":null,\"customfield_10012\":null,\"customfield_10057\":null,\"customfield_10013\":null,\"customfield_10008\":null,\"aggregatetimeestimate\":null,\"customfield_10009\":null,\"summary\":\"As a user, I want to be able to see the priority of one of my issues so that I can know what to work on first.\",\"creator\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/user?username=admin\",\"name\":\"admin\",\"key\":\"admin\",\"accountId\":\"557058:1a8344f7-d59d-4457-823d-ef1e6ac1e4fc\",\"emailAddress\":\"adachille15@gmail.com\",\"avatarUrls\":{\"48x48\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue\",\"24x24\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue\",\"16x16\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue\",\"32x32\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue\"},\"displayName\":\"Anthony D'Achille\",\"active\":true,\"timeZone\":\"America/New_York\"},\"subtasks\":[],\"reporter\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/user?username=admin\",\"name\":\"admin\",\"key\":\"admin\",\"accountId\":\"557058:1a8344f7-d59d-4457-823d-ef1e6ac1e4fc\",\"emailAddress\":\"adachille15@gmail.com\",\"avatarUrls\":{\"48x48\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue\",\"24x24\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue\",\"16x16\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue\",\"32x32\":\"https://avatar-cdn.atlassian.com/962b596d347ca876fa2af53bf2740f9d?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F962b596d347ca876fa2af53bf2740f9d%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue\"},\"displayName\":\"Anthony D'Achille\",\"active\":true,\"timeZone\":\"America/New_York\"},\"customfield_10000\":\"{}\",\"aggregateprogress\":{\"progress\":0,\"total\":0},\"customfield_10001\":null,\"customfield_10002\":null,\"customfield_10003\":null,\"customfield_10004\":null,\"customfield_10048\":null,\"environment\":null,\"duedate\":null,\"progress\":{\"progress\":0,\"total\":0},\"votes\":{\"self\":\"https://jira-voice.atlassian.net/rest/api/2/issue/JV-8/votes\",\"votes\":0,\"hasVoted\":false}}}]"
-    },
+    "attributes": {},
     "user": {
-      "userId": "amzn1.ask.account.AGHAUM3HBZJVRJCS7AECVULLM56LA3QMEMC5PPOQSV5YNHMIIEW4246S4LK3WGXHDSPHBRKKVK6DM6BEUREIGD3THHLMWSXV6QQDEV2ZEBACDXO5BD45GLSSJMEYQW67Z3YZWMYKDIHZZHO3BBR6KOMG6A77ZHAD24ZRFD2HJWD3ZEVICA5EQRECE7YUTKRNYUGYMZYNJ62MAEI"
+      "userId": "amzn1.ask.account.AESYD4V4NTOARDDLNCIAHBJZ5JOZS7YX7BQTWZRE7STXOAG7WW4XYVWNOX6VPLUHNS2TFO7DVGLABD63RLDDGNA5ZXVUG6ORQCUGBRQLLUXVTYQ3GIRRLXZ4BS4ACFL3DLKJUTY7YJU56HO3XWHQHLVQEP7EDXQRPITPUV4CPNSJTI4IVUQR7D7HODJMSS2OSXV32M3BAUI2OIQ"
     }
   },
   "request": {
-    "type": "IntentRequest",
-    "requestId": "EdwRequestId.4271b7da-3031-4b28-bd43-1adba10aa76a",
-    "intent": {
-      "name": "ListIssuesIntent",
-      "slots": {
-        "column": {
-          "name": "column",
-          "value": "to do"
-        }
-      }
-    },
+    "type": "LaunchRequest",
+    "requestId": "EdwRequestId.72d1ad31-14cb-47f5-a0d4-9f83ba257cbf",
     "locale": "en-US",
-    "timestamp": "2017-10-14T19:10:16Z"
+    "timestamp": "2017-10-15T02:31:11Z"
   },
   "context": {
     "AudioPlayer": {
@@ -38,7 +25,7 @@
         "applicationId": "amzn1.ask.skill.4f05a321-de24-4a56-a7b4-9e83eb9e5a54"
       },
       "user": {
-        "userId": "amzn1.ask.account.AGHAUM3HBZJVRJCS7AECVULLM56LA3QMEMC5PPOQSV5YNHMIIEW4246S4LK3WGXHDSPHBRKKVK6DM6BEUREIGD3THHLMWSXV6QQDEV2ZEBACDXO5BD45GLSSJMEYQW67Z3YZWMYKDIHZZHO3BBR6KOMG6A77ZHAD24ZRFD2HJWD3ZEVICA5EQRECE7YUTKRNYUGYMZYNJ62MAEI"
+        "userId": "amzn1.ask.account.AESYD4V4NTOARDDLNCIAHBJZ5JOZS7YX7BQTWZRE7STXOAG7WW4XYVWNOX6VPLUHNS2TFO7DVGLABD63RLDDGNA5ZXVUG6ORQCUGBRQLLUXVTYQ3GIRRLXZ4BS4ACFL3DLKJUTY7YJU56HO3XWHQHLVQEP7EDXQRPITPUV4CPNSJTI4IVUQR7D7HODJMSS2OSXV32M3BAUI2OIQ"
       },
       "device": {
         "supportedInterfaces": {}
