@@ -1,7 +1,7 @@
 {
   "session": {
     "new": true,
-    "sessionId": "SessionId.0037183c-ce1e-455b-aab4-38a2ee1b91d3",
+    "sessionId": "SessionId.54af7f77-1a4f-4159-8679-969f93677a08",
     "application": {
       "applicationId": "amzn1.ask.skill.4f05a321-de24-4a56-a7b4-9e83eb9e5a54"
     },
@@ -12,22 +12,22 @@
   },
   "request": {
     "type": "IntentRequest",
-    "requestId": "EdwRequestId.50ad1339-08fb-42da-8846-032c8ea12360",
+    "requestId": "EdwRequestId.246c7944-86ab-4188-85d3-a98ddb781ff3",
     "intent": {
-      "name": "UpdateSummaryIntent",
+      "name": "AddCommentIntent",
       "slots": {
-        "summary": {
-          "name": "summary",
-          "value": "as a user I want to log in so that I can see stuff"
-        },
         "issue": {
           "name": "issue",
           "value": "10001"
+        },
+        "comment": {
+          "name": "comment",
+          "value": "this is a test of the Georgia tech emergency notification system"
         }
       }
     },
     "locale": "en-US",
-    "timestamp": "2017-10-15T03:37:35Z"
+    "timestamp": "2017-10-15T03:50:33Z"
   },
   "context": {
     "AudioPlayer": {

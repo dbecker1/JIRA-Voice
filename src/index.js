@@ -24,6 +24,24 @@ const initialHandlers = {
     "LaunchRequest": function() {
         this.emit("InitialIntent");
     },
+    "AMAZON.HelpIntent": function() {
+        this.response.speak("You can ask to perform multiple different actions regarding your Jira issues. You can ask for descriptions" +
+            "of them, edit fields on then, or even resolve them and assign them to other users.");
+        this.emit(":responseReady");
+    },
+    "AMAZON.StopIntent": function() {
+        this.response.speak("Goodbye!");
+        this.emit(':responseReady');
+    },
+    "AMAZON.CancelIntent": function() {
+        this.response.speak("Goodbye!");
+        this.emit(':responseReady');
+    },
+    'SessionEndedRequest': function () {
+        console.log('session ended!');
+        this.response.speak("Goodbye!");
+        this.emit(':responseReady');
+    },
     "InitialIntent": function() {
         var jiraSession = new JIRA(jiraUsername, jiraPassword);
         var output = this;
@@ -116,24 +134,21 @@ const initialHandlers = {
             output.emit(":responseReady");
         });
     },
-    "AMAZON.HelpIntent": function() {
-        this.response.speak("You can ask to perform multiple different actions regarding your Jira issues. You can ask for descriptions" +
-            "of them, edit fields on then, or even resolve them and assign them to other users.");
-        this.emit(":responseReady");
-    },
-    "AMAZON.StopIntent": function() {
-        this.response.speak("Goodbye!");
-        this.emit(':responseReady');
-    },
-    "AMAZON.CancelIntent": function() {
-        this.response.speak("Goodbye!");  
-        this.emit(':responseReady');  
-    },
-    'SessionEndedRequest': function () {
-        console.log('session ended!');
-        this.response.speak("Goodbye!");
-        this.emit(':responseReady');
+    "AddCommentIntent": function() {
+        var jiraSession = new JIRA(jiraUsername, jiraPassword);
+        var output = this;
+        var issue = this.event.request.intent.slots.issue.value;
+        var body = this.event.request.intent.slots.comment.value;
+        if (!issue || !body) {
+            this.response.speak("I'm sorry, there was an issue with your arguments. Please try again");
+            this.emit(":responseReady");
+        }
+        jiraSession.addComment(issue, body, function(result){
+            output.response.speak("Added your comment " + body + " to issue " + issue);
+            output.emit(":responseReady");
+        });
     }
+
 };
 
 
