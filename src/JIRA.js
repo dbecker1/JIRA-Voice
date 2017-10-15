@@ -21,15 +21,37 @@ class JIRA {
         this.auth = b64.encode(username + ":" + password);
     }
 
+    addComment(issueID, body, callback) {
+        var postArgs = {
+            headers: {
+                // Do authorization for this request
+                "Authorization": "Basic " + this.auth,
+                "Content-Type": "application/json"
+            },
+            data: {
+                "body": body
+            }
+        }
+
+        this.client.post(baseUrl + "api/2/issue/" + issueID + "/comment",
+            postArgs, function(data, response) {
+                console.log('status code of addComment:', response.statusCode);
+                if (!!callback) {
+                    callback(data);
+                }
+        });
+        return "Added comment: '" + body +"' to issue: " + issueID;
+    }
+
     assign(issueID, assignee, callback) {
         var putArgs = {
             headers: {
-                    // Set the cookie from the session information
-                    "Authorization": "Basic " + this.auth,
-                    "Content-Type": "application/json"
+                // Do authorization for this request
+                "Authorization": "Basic " + this.auth,
+                "Content-Type": "application/json"
             },
             data: {
-                    "name": userMapping[assignee]
+                "name": userMapping[assignee]
             }
         };
 
@@ -46,7 +68,7 @@ class JIRA {
     getTransitions(issueID, callback) {
         var getArgs = {
             headers: {
-                // Set the cookie from the session information
+                // Do authorization for this request
                 "Authorization": "Basic " + this.auth,
                 "Content-Type": "application/json"
             },
@@ -74,7 +96,7 @@ class JIRA {
 
         var postArgs = {
             headers: {
-                // Set the cookie from the session information
+                // Do authorization for this request
                 "Authorization": "Basic " + this.auth,
                 "Content-Type": "application/json"
             },
@@ -111,7 +133,7 @@ class JIRA {
     queryAll(assignee, callback) {
         var searchArgs = {
             headers: {
-                // Set the cookie from the session information
+                // Do authorization for this request
                 "Authorization": "Basic " + this.auth,
                 "Content-Type": "application/json"
             },
@@ -133,14 +155,14 @@ class JIRA {
     transition(issueID, columnId, callback) {
         var postArgs = {
             headers: {
-                    // Set the cookie from the session information
-                    "Authorization": "Basic " + this.auth,
-                    "Content-Type": "application/json"
+                // Do authorization for this request
+                "Authorization": "Basic " + this.auth,
+                "Content-Type": "application/json"
             },
             data: {
-                    "transition": {
-                        "id": columnId
-                    },
+                "transition": {
+                    "id": columnId
+                },
             }
         };
 
@@ -158,18 +180,18 @@ class JIRA {
     updateDescription(issueID, description, callback) {
         var putArgs = {
             headers: {
-                    // Set the cookie from the session information
-                    "Authorization": "Basic " + this.auth,
-                    "Content-Type": "application/json"
+                // Do authorization for this request
+                "Authorization": "Basic " + this.auth,
+                "Content-Type": "application/json"
             },
             data: {
-                    "update": {
-                        "description": [
-                            {
-                                "set": description
-                            }
-                        ],
-                    }
+                "update": {
+                    "description": [
+                        {
+                            "set": description
+                        }
+                    ],
+                }
             }
         };
 
@@ -209,20 +231,20 @@ class JIRA {
 
     updateSummary(issueID, summary, callback) {
         var putArgs = {
-                headers: {
-                        // Set the cookie from the session information
-                        "Authorization": "Basic " + this.auth,
-                        "Content-Type": "application/json"
-                },
-                data: {
-                    "update": {
-                        "summary": [
-                            {
-                                "set": summary
-                            }
-                        ],
-                    }
+            headers: {
+                    // Do authorization for this request
+                    "Authorization": "Basic " + this.auth,
+                    "Content-Type": "application/json"
+            },
+            data: {
+                "update": {
+                    "summary": [
+                        {
+                            "set": summary
+                        }
+                    ],
                 }
+            }
         };
 
         this.client.put(baseUrl + "api/2/issue/" + issueID,
@@ -235,33 +257,6 @@ class JIRA {
         return "In issue " + issueID + ", set summary to " + summary;
     }
 
-
-
-    authenticate(username, password) {
-        // Provide user credentials, which will be used to log into JIRA
-        var loginArgs = {
-            data: {
-                "username": username,
-                "password": password
-            },
-            headers: {
-                "Content-Type": "application/json"
-            }
-        };
-
-        this.client.post(baseUrl + "auth/1/session", loginArgs, function(data, response){
-                if (response.statusCode == 200) {
-                        console.log('succesfully logged in, session:', data.session);
-                        this.session = data.session;
-                }
-                else {
-                        console.log(response.statusCode);
-                        throw "Login failed :(";
-                }
-        });
-
-        return "Authenticated!";
-    }
 }
 exports.JIRA = JIRA;
 
